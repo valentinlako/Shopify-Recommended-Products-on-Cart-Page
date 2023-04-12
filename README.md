@@ -4,7 +4,7 @@
 ![image](https://user-images.githubusercontent.com/1571083/231435940-da39a4e4-fea9-4bd7-81e5-529179561b68.png)
 
 # Step 1. 
-- Add Owl Carousel to your theme.liquid file
+Add Owl Carousel to your theme.liquid file
 
 Include the necessary OwlCarousel CSS and JS files in your theme. Add the following lines to your theme.liquid file within the <head> section:
 > <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
