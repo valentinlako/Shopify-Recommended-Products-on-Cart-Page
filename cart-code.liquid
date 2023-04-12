@@ -62,29 +62,24 @@
                       <input type="hidden" name="id" value="{{ product.variants.first.id }}">
                       <!-- Submit the ID of the first variant of the product -->
                       <button
-                        class="product-form--atc-button mdc-ripple-surface mdc-ripple-upgraded"
-                        type="submit"
-                        data-product-atc=""
-                        style="--mdc-ripple-fg-size:268px; --mdc-ripple-fg-scale:1.71739; --mdc-ripple-fg-translate-start:123.75px, -115.156px; --mdc-ripple-fg-translate-end:89.625px, -108.008px;"
-                      >
-                        <span class="atc-button--text"> Add to cart </span>
-                        <!-- Display the "Add to cart" button text -->
-                        <span class="atc-button--icon">
-                          <svg
-                            aria-hidden="true"
-                            focusable="false"
-                            role="presentation"
-                            width="26"
-                            height="26"
-                            viewBox="0 0 26 26"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <g fill-rule="nonzero" fill="currentColor">
-                                <path d="M13 26C5.82 26 0 20.18 0 13S5.82 0 13 0s13 5.82 13 13-5.82 13-13 13zm0-3.852a9.148 9.148 0 1 0 0-18.296 9.148 9.148 0 0 0 0 18.296z" opacity=".29"></path><path d="M13 26c7.18 0 13-5.82 13-13a1.926 1.926 0 0 0-3.852 0A9.148 9.148 0 0 1 13 22.148 1.926 1.926 0 0 0 13 26z"></path>
-                                </g>
-                          </svg>
-                        </span>
-                      </button>
+                          type="submit"
+                          name="add"
+                          class="product-form__submit button button--full-width button--secondary"
+                        >
+                          <span>Add to cart </span>
+                          <div class="loading-overlay__spinner hidden">
+                            <svg
+                              aria-hidden="true"
+                              focusable="false"
+                              role="presentation"
+                              class="spinner"
+                              viewBox="0 0 66 66"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                            </svg>
+                          </div>
+                        </button>
                     </form>
                   </li>
                   {% assign product_count = product_count | plus: 1 %}
