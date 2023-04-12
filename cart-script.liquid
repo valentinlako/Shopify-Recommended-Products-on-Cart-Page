@@ -1,0 +1,26 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function() { // Wait for the DOM to be loaded
+      const productRecommendations = document.querySelector('.owl-carousel'); // Find the element with class 'owl-carousel'
+      if (productRecommendations) { // If the element is found
+        $(productRecommendations).owlCarousel({ // Initialize the Owl Carousel plugin
+          loop: true, // Enable looping of the carousel
+          margin: 10, // Set the margin between items in the carousel
+          nav: false, // Disable the navigation arrows
+          autoplay:true, // Enable automatic sliding of the carousel
+          autoplayTimeout:3000, // Set the time between each slide to 3 seconds
+          autoplayHoverPause:true, // Pause the carousel when the mouse hovers over it
+          responsive: { // Set the number of items to display based on the screen size
+            0: { // For screens less than 600px wide
+              items: 1 // Display one item at a time
+            },
+            600: { // For screens between 600px and 1000px wide
+              items: 2 // Display two items at a time
+            },
+            1000: { // For screens 1000px or wider
+              items: 4 // Display four items at a time
+            }
+          }
+        });
+      }
+    });
+  </script>

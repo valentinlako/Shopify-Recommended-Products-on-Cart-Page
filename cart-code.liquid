@@ -1,0 +1,154 @@
+{% if cart.item_count > 0 %}
+  <!-- Check if there are any items in the cart -->
+  <div>
+    <div id="product-recommendations" class="v-product-recommendations">
+      <h2>You may also like</h2>
+      <!-- Display a title for the product recommendations section -->
+      <ul class="owl-carousel owl-theme">
+        <!-- Start an unordered list for the recommended products using Owl Carousel -->
+        {% assign max_products = 12 %}
+        <!-- Set the maximum number of recommended products to display to 12 -->
+        {% assign product_count = 0 %}
+        <!-- Set the initial counter of recommended products displayed to 0 -->
+        {% for item in cart.items %}
+          <!-- Loop through each item in the cart -->
+          {% for collection in item.product.collections %}
+            <!-- Loop through each collection the item belongs to -->
+            {% for product in collection.products %}
+              <!-- Loop through each product in the collection -->
+              {% assign product_in_cart = false %}
+              <!-- Initialize a boolean to check if the product is already in the cart -->
+              {% for cart_item in cart.items %}
+                <!-- Loop through each item in the cart to check if the product is already in the cart -->
+                {% if product.id == cart_item.product.id or product.title == cart_item.product.title %}
+                  <!-- Check if the product ID or title matches a product in the cart -->
+                  {% assign product_in_cart = true %}
+                  <!-- Set the boolean to true if the product is already in the cart -->
+                  {% break %}
+                  <!-- Stop looping through the cart items once a match is found -->
+                {% endif %}
+              {% endfor %}
+              {% unless product_in_cart %}
+                <!-- Display the product if it is not already in the cart -->
+                {% if product_count < max_products and product.available %}
+                  <!--
+                    Display the product if the maximum number of recommended products has not been reached and the product is available
+                  -->
+                  <li>
+                    <a href="{{ product.url }}">
+                      <!-- Link to the product's URL -->
+                      <img
+                        src="{{ product.featured_image | img_url: '300x300' }}"
+                        alt="{{ product.featured_image.alt }}"
+                        /
+                      >
+                      <p>{{ product.title }}</p>
+                      <!-- Display the product's title -->
+                      <p>{{ product.price | money }}</p>
+                      <!-- Display the product's price -->
+                    </a>
+                    <form action="/cart/add" method="post">
+                      <!-- Display a form to add the product to the cart -->
+                      <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                      <!-- Submit the ID of the first variant of the product -->
+                      <button
+                        class="product-form--atc-button mdc-ripple-surface mdc-ripple-upgraded"
+                        type="submit"
+                        data-product-atc=""
+                        style="--mdc-ripple-fg-size:268px; --mdc-ripple-fg-scale:1.71739; --mdc-ripple-fg-translate-start:123.75px, -115.156px; --mdc-ripple-fg-translate-end:89.625px, -108.008px;"
+                      >
+                        <span class="atc-button--text"> Add to cart </span>
+                        <!-- Display the "Add to cart" button text -->
+                        <span class="atc-button--icon">
+                          <svg
+                            aria-hidden="true"
+                            focusable="false"
+                            role="presentation"
+                            width="26"
+                            height="26"
+                            viewBox="0 0 26 26"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g fill-rule="nonzero" fill="currentColor">
+                                <path d="M13 26C5.82 26 0 20.18 0 13S5.82 0 13 0s13 5.82 13 13-5.82 13-13 13zm0-3.852a9.148 9.148 0 1 0 0-18.296 9.148 9.148 0 0 0 0 18.296z" opacity=".29"></path><path d="M13 26c7.18 0 13-5.82 13-13a1.926 1.926 0 0 0-3.852 0A9.148 9.148 0 0 1 13 22.148 1.926 1.926 0 0 0 13 26z"></path>
+                                </g>
+                          </svg>
+                        </span>
+                      </button>
+                    </form>
+                  </li>
+                  {% assign product_count = product_count | plus: 1 %}
+                  <!-- Increment the number of recommended products displayed -->
+                {% endif %}
+              {% endunless %}
+            {% endfor %}
+            {% if product_count >= max_products %}
+              <!-- Stop looping through collections if the maximum number of recommended products has been reached -->
+              {% break %}
+            {% endif %}
+          {% endfor %}
+          {% if product_count >= max_products %}
+            <!-- Stop looping through cart items if the maximum number of recommended products has been reached -->
+            {% break %}
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endif %}
+<!-- End the if statement checking if there are any items in the cart -->
+
+<style>
+  /* CART PRODUCT RECOMMENDATIONS CSS */
+  .v-product-recommendations ul {
+    display: flex;
+    gap: 1em;
+    list-style-type: none;
+    padding: 0;
+    margin: 1em 0 2em;
+  }
+  .v-product-recommendations li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    text-align: center;
+  }
+  .v-product-recommendations a {
+    text-decoration: unset;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    text-align: center;
+  }
+  .v-product-recommendations p,
+  .v-product-recommendations a {
+    padding: 0;
+    margin: 0;
+  }
+  .v-product-recommendations form {
+    width: 100%;
+  }
+  .v-product-recommendations button {
+    margin: 0;
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+  .v-product-recommendations .owl-carousel .owl-dot {
+    width: fit-content;
+    margin-top: 1em;
+  }
+  .v-product-recommendations .owl-carousel .owl-dot span {
+    background: transparent !important;
+    border: 1px solid #808285 !important;
+  }
+  .v-product-recommendations .owl-carousel .owl-dot:hover span {
+    background: #808285 !important;
+  }
+  .v-product-recommendations .owl-carousel .owl-dot.active span {
+    background: #808285 !important;
+  }
+</style>
